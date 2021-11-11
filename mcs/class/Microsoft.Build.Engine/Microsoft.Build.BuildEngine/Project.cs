@@ -39,8 +39,10 @@ using System.Xml;
 using System.Xml.Schema;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
+using Microsoft.Build.Shared;
 using Mono.XBuild.Framework;
 using Mono.XBuild.CommandLine;
+using Microsoft.Build.BuildEngine;
 
 namespace Microsoft.Build.BuildEngine {
 	public class Project {
@@ -786,18 +788,91 @@ namespace Microsoft.Build.BuildEngine {
 					 string condition,
 					 PropertyPosition position)
 		{
-			SetProperty (propertyName, propertyValue, condition,
-				PropertyPosition.UseExistingOrCreateAfterLastPropertyGroup, false);
+			  //TODO:MVM SetProperty (propertyName, propertyValue, condition, PropertyPosition.UseExistingOrCreateAfterLastPropertyGroup, false);
+                this.SetPropertyAtHelper(propertyName, propertyValue, condition, false, null, position);
 		}
 
-		[MonoTODO]
+		internal void SetPropertyAtHelper(string propertyName, string propertyValue, string condition, bool importedProperty, Project importedProject, PropertyPosition position)
+		{
+			ErrorUtilities.VerifyThrowArgumentLength(propertyName, "propertyName");
+			ErrorUtilities.VerifyThrowArgument(propertyValue != null, "CannotSetPropertyToNull");
+			if (condition == null)
+			{
+				condition = string.Empty;
+			}
+		/*	bool flag = position == PropertyPosition.UseExistingOrCreateAfterLastImport;
+			BuildPropertyGroup buildPropertyGroup = null;
+			BuildProperty buildProperty = null;
+			string importedFilename = null;
+			if (importedProperty)
+			{
+				importedFilename = importedProject.FullFileName;
+			}
+			this.FindMatchingPropertyPosition(propertyName, condition, flag, importedProperty, importedFilename, ref buildPropertyGroup, ref buildProperty);
+			if (buildProperty != null)
+			{
+				buildProperty.SetValue(propertyValue);
+				return;
+			}
+			if (buildPropertyGroup == null)
+			{
+				if (importedProperty)
+				{
+					buildPropertyGroup = this.AddNewImportedPropertyGroup(importedFilename, condition);
+				}
+				else
+				{
+					buildPropertyGroup = this.AddNewPropertyGroup(flag);
+					buildPropertyGroup.Condition = condition;
+				}
+			}
+			if (importedProperty)
+			{
+				buildPropertyGroup.AddNewImportedProperty(propertyName, propertyValue, importedProject);
+				return;
+			}
+			buildPropertyGroup.AddNewProperty(propertyName, propertyValue);*/
+		}
+		/*
+			private void FindMatchingPropertyPosition(string propertyName, string condition, bool matchOnlyAfterImport, bool importedPropertyGroup, string importedFilename, ref BuildPropertyGroup matchingPropertyGroup, ref BuildProperty matchingProperty)
+		{
+			foreach (object obj in this.PropertyGroups)
+			{
+				BuildPropertyGroup buildPropertyGroup = (BuildPropertyGroup)obj;
+				if (!importedPropertyGroup && matchOnlyAfterImport && buildPropertyGroup.IsImported)
+				{
+					matchingPropertyGroup = null;
+					matchingProperty = null;
+				}
+				if (buildPropertyGroup.IsImported == importedPropertyGroup && string.Compare(buildPropertyGroup.Condition.Trim(), condition.Trim(), StringComparison.OrdinalIgnoreCase) == 0 && (!importedPropertyGroup || (importedPropertyGroup && string.Compare(buildPropertyGroup.ImportedFromFilename, importedFilename, StringComparison.OrdinalIgnoreCase) == 0)))
+				{
+					if (matchingPropertyGroup == null)
+					{
+						matchingPropertyGroup = buildPropertyGroup;
+					}
+					foreach (object obj2 in buildPropertyGroup)
+					{
+						BuildProperty buildProperty = (BuildProperty)obj2;
+						if (string.Compare(buildProperty.Name, propertyName, StringComparison.OrdinalIgnoreCase) == 0)
+						{
+							matchingProperty = buildProperty;
+						}
+					}
+				}
+			}
+		}
+		
+		*/
+	 
 		public void SetProperty (string propertyName,
 					 string propertyValue,
 					 string condition,
 					 PropertyPosition position,
 					 bool treatPropertyValueAsLiteral)
 		{
-			throw new NotImplementedException ();
+			//SetProperty(propertyName, treatPropertyValueAsLiteral ? EscapingUtilities.Escape(propertyValue) : propertyValue, condition, position);
+            Console.WriteLine($"TODO: SetProperty({propertyName}, {treatPropertyValueAsLiteral} ? {propertyValue} : {propertyValue}, {condition}, {position});");
+            //SetProperty(propertyName, treatPropertyValueAsLiteral ? propertyValue : propertyValue, condition, position);
 		}
 
 		internal void Unload ()

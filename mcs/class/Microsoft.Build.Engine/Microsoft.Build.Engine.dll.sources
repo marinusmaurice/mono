@@ -75,3 +75,11 @@ Microsoft.Build.BuildEngine/UsingTask.cs
 Microsoft.Build.BuildEngine/UsingTaskCollection.cs
 Microsoft.Build.BuildEngine/Utilities.cs
 Microsoft.Build.BuildEngine/WriteHandler.cs
+Microsoft.Build.BuildEngine/CopyOnWriteHashtable.cs 
+Microsoft.Build.Shared/EscapingUtilities.cs
+Microsoft.Build.Shared/InternalErrorException.cs
+Microsoft.Build.Shared/ResourceUtilities.cs
+Microsoft.Build.Shared/AssemblyResources.cs
+Microsoft.Build.Shared/ErrorUtilities.cs
+Microsoft.Build.Shared/ProjectErrorUtilities.cs
+Microsoft.Build.Shared/XMakeElements.cs

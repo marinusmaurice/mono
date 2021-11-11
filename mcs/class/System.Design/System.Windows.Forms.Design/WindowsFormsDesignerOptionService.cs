@@ -1,54 +1,44 @@
-//
-// System.Windows.Forms.Design.ShortcutKeysEditor.cs
-//
-// Author:
-//	Atsushi Enomoto (atsushi@ximian.com)
-//
-// Copyright (C) 2007 Novell, Inc.
-//
-
-//
-// Permission is hereby granted, free of charge, to any person obtaining
-// a copy of this software and associated documentation files (the
-// "Software"), to deal in the Software without restriction, including
-// without limitation the rights to use, copy, modify, merge, publish,
-// distribute, sublicense, and/or sell copies of the Software, and to
-// permit persons to whom the Software is furnished to do so, subject to
-// the following conditions:
-// 
-// The above copyright notice and this permission notice shall be
-// included in all copies or substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
-// LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-// OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-// WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-//
-
-
 using System;
 using System.ComponentModel.Design;
 
 namespace System.Windows.Forms.Design
 {
+	/// <summary>Provides access to get and set option values for a Windows Forms designer.</summary>
+	// Token: 0x020002E1 RID: 737
 	public class WindowsFormsDesignerOptionService : DesignerOptionService
 	{
-		public WindowsFormsDesignerOptionService ()
+		/// <summary>Gets the <see cref="T:System.Windows.Forms.Design.DesignerOptions" /> exposed by the <see cref="T:System.Windows.Forms.Design.WindowsFormsDesignerOptionService" />.</summary>
+		/// <returns>The <see cref="T:System.Windows.Forms.Design.DesignerOptions" /> exposed by the <see cref="T:System.Windows.Forms.Design.WindowsFormsDesignerOptionService" />.</returns>
+		// Token: 0x170004E8 RID: 1256
+		// (get) Token: 0x06001C56 RID: 7254 RVA: 0x0009F6ED File Offset: 0x0009E6ED
+		public virtual DesignerOptions CompatibilityOptions
 		{
+			get
+			{
+				if (this._options == null)
+				{
+					this._options = new DesignerOptions();
+				}
+				return this._options;
+			}
 		}
 
-		public virtual DesignerOptions CompatibilityOptions {
-			get { throw new NotImplementedException (); }
+		/// <summary>Populates a <see cref="T:System.ComponentModel.Design.DesignerOptionService.DesignerOptionCollection" />.</summary>
+		/// <param name="options">The collection to populate.</param>
+		// Token: 0x06001C57 RID: 7255 RVA: 0x0009F708 File Offset: 0x0009E708
+		protected override void PopulateOptionCollection(DesignerOptionService.DesignerOptionCollection options)
+		{
+			if (options.Parent == null)
+			{
+				DesignerOptions compatibilityOptions = this.CompatibilityOptions;
+				if (compatibilityOptions != null)
+				{
+					base.CreateOptionCollection(options, "DesignerOptions", compatibilityOptions);
+				}
+			}
 		}
 
-		[MonoTODO]
-		protected override void PopulateOptionCollection (DesignerOptionService.DesignerOptionCollection options)
-		{
-			throw new NotImplementedException ();
-		}
+		// Token: 0x040015DF RID: 5599
+		private DesignerOptions _options;
 	}
 }
-

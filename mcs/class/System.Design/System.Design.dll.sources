@@ -88,10 +88,12 @@ System.ComponentModel.Design.Serialization/EnumCodeDomSerializer.cs
 System.ComponentModel.Design.Serialization/EventCodeDomSerializer.cs
 System.ComponentModel.Design.Serialization/ExpressionContext.cs
 System.ComponentModel.Design.Serialization/ICodeDomDesignerReload.cs
+System.ComponentModel.Design.Serialization/LocalizationCodeDomSerializer.cs
 System.ComponentModel.Design.Serialization/MemberCodeDomSerializer.cs
 System.ComponentModel.Design.Serialization/ObjectStatementCollection.cs
 System.ComponentModel.Design.Serialization/PrimitiveCodeDomSerializer.cs
 System.ComponentModel.Design.Serialization/PropertyCodeDomSerializer.cs
+System.ComponentModel.Design.Serialization/ResourcePropertyMemberCodeDomSerializer.cs
 System.ComponentModel.Design.Serialization/RootCodeDomSerializer.cs
 System.ComponentModel.Design.Serialization/RootContext.cs
 System.ComponentModel.Design.Serialization/SerializeAbsoluteContext.cs
