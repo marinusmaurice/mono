@@ -85,9 +85,7 @@
 #include <string.h>
 #include <ctype.h>
 #include "trace.h"
-#ifndef ENABLE_NETCORE
 #include "version.h"
-#endif
 #include "aot-compiler.h"
 #include "aot-runtime.h"
 #include "llvmonly-runtime.h"
@@ -393,7 +391,6 @@ gboolean mono_method_same_domain (MonoJitInfo *caller, MonoJitInfo *callee)
 	if (caller->domain_neutral && !callee->domain_neutral)
 		return FALSE;
 
-#ifndef ENABLE_NETCORE
 	MonoMethod *cmethod;
 
 	cmethod = jinfo_get_method (caller);
@@ -402,7 +399,6 @@ gboolean mono_method_same_domain (MonoJitInfo *caller, MonoJitInfo *callee)
 		 /* The InvokeInDomain methods change the current appdomain */
 		return FALSE;
 	}
-#endif
 	return TRUE;
 }
 
@@ -4387,12 +4383,6 @@ mini_init (const char *filename, const char *runtime_version)
 	}
 #endif
 
-	mono_interp_stub_init ();
-#ifndef DISABLE_INTERPRETER
-	if (mono_use_interpreter)
-		mono_ee_interp_init (mono_interp_opts_string);
-#endif
-
 	mono_debugger_agent_stub_init ();
 #ifndef DISABLE_SDB
 	mono_debugger_agent_init ();
@@ -4400,6 +4390,12 @@ mini_init (const char *filename, const char *runtime_version)
 
 	if (sdb_options)
 		mini_get_dbg_callbacks ()->parse_options (sdb_options);
+
+	mono_interp_stub_init ();
+#ifndef DISABLE_INTERPRETER
+	if (mono_use_interpreter)
+		mono_ee_interp_init (mono_interp_opts_string);
+#endif
 
 	mono_os_mutex_init_recursive (&jit_mutex);
 
@@ -4639,9 +4635,7 @@ mini_init (const char *filename, const char *runtime_version)
 	mono_simd_intrinsics_init ();
 #endif
 
-#ifndef ENABLE_NETCORE
 	mono_tasklets_init ();
-#endif
 
 	register_trampolines (domain);
 
@@ -5088,9 +5082,7 @@ mini_cleanup (MonoDomain *domain)
 	mono_runtime_cleanup (domain);
 #endif
 
-#ifndef ENABLE_NETCORE
 	mono_threadpool_cleanup ();
-#endif
 
 	MONO_PROFILER_RAISE (runtime_shutdown_end, ());
 

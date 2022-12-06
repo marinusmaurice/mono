@@ -29,7 +29,6 @@ orbis_SUBDIRS := build class
 unreal_SUBDIRS := build class
 wasm_SUBDIRS := build class
 wasm_tools_SUBDIRS := build class tools
-netcore_SUBDIRS := build class
 
 include build/rules.make
 
@@ -125,7 +124,7 @@ dist-tarball: dist-pre
 dist: dist-tarball
 	rm -rf $(package)
 
-# the egrep -v is kind of a hack (to get rid of the makefrags)
+# the grep -E -v is kind of a hack (to get rid of the makefrags)
 # but otherwise we have to make dist then make clean which
 # is sort of not kosher. And it breaks with DIST_ONLY_SUBDIRS.
 #
@@ -144,7 +143,7 @@ distcheck: dist-tarball
 	tar tjf $(package)/$(package).tar.bz2 |sed -e 's,/$$,,' |sort >distdist.list ; \
 	rm $(package)/$(package).tar.bz2 ; \
 	tar tjf $(package).tar.bz2 |sed -e 's,/$$,,' |sort >before.list ; \
-	find $(package) |egrep -v '(makefrag|response)' |sed -e 's,/$$,,' |sort >after.list ; \
+	find $(package) |grep -E -v '(makefrag|response)' |sed -e 's,/$$,,' |sort >after.list ; \
 	cmp before.list after.list || exit 1 ; \
 	cmp before.list distdist.list || exit 1 ; \
 	rm -f before.list after.list distdist.list ; \
